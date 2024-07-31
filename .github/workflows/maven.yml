@@ -39,3 +39,12 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         tag_prefix: 'build_'
+
+    - name: Package build
+      run: zip -r "${{ github.ref_name }}.zip" target/*.jar
+
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ github.ref_name }}
+        path: "${{ github.ref_name }}.zip"
